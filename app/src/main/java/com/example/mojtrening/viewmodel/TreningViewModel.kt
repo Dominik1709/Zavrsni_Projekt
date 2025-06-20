@@ -10,8 +10,14 @@ class TreningViewModel : ViewModel() {
     var listaVjezbi = mutableStateListOf<Vjezba>()
         private set
 
-    fun dodajVjezbu(naziv: String, kilaza: String, ponavljanja: String) {
-        listaVjezbi.add(Vjezba(naziv, kilaza, ponavljanja))
+    fun dodajVjezbu(vjezba: Vjezba) {
+        listaVjezbi.add(vjezba)
+    }
+
+    fun obrisiVjezbu(index: Int) {
+        if (index >= 0 && index < listaVjezbi.size) {
+            listaVjezbi.removeAt(index)
+        }
     }
 
 }

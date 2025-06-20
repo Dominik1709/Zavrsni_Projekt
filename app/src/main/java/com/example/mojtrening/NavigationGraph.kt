@@ -18,7 +18,7 @@ fun NavigationGraph(navController: NavHostController) {
             SettingsScreen(navController)
         }
         composable("trening_screen") {
-            TreningScreen(navController)
+            TreningScreen()
         }
     }
 }
