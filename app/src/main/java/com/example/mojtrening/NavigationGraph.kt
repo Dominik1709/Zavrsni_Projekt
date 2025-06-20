@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mojtrening.ui.theme.screen.LoginScreen
+import com.example.mojtrening.ui.theme.screen.PovijestTreningaScreen
 import com.example.mojtrening.ui.theme.screen.SettingsScreen
 import com.example.mojtrening.ui.theme.screen.TreningScreen
 
@@ -20,5 +21,11 @@ fun NavigationGraph(navController: NavHostController) {
         composable("trening_screen") {
             TreningScreen()
         }
+        composable("povijest_screen") {
+            PovijestTreningaScreen(navController)
+        }
+
     }
+
 }
+
