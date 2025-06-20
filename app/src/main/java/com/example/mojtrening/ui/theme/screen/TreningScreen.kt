@@ -10,6 +10,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mojtrening.viewmodel.TreningViewModel
 import com.example.mojtrening.model.Vjezba
+import androidx.compose.ui.Alignment
+
 
 @Composable
 fun TreningScreen(viewModel: TreningViewModel = viewModel()) {
@@ -77,9 +79,19 @@ fun TreningScreen(viewModel: TreningViewModel = viewModel()) {
                         Text("Naziv: ${vjezba.naziv}")
                         Text("Kilaža: ${vjezba.kilaza} kg")
                         Text("Ponavljanja: ${vjezba.ponavljanja}")
+
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Button(
+                            onClick = { viewModel.obrisiVjezbu(index) },
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Text("Obriši")
+                        }
                     }
                 }
             }
         }
+
     }
 }
