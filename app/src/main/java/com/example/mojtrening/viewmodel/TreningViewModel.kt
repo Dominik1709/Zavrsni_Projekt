@@ -1,23 +1,28 @@
 package com.example.mojtrening.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.example.mojtrening.model.Vjezba
+import androidx.lifecycle.viewModelScope
+import com.example.mojtrening.data.VjezbaRepository
+import com.example.mojtrening.model.VjezbaEntity
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
+class TreningViewModel(private val repository: VjezbaRepository) : ViewModel() {
 
-class TreningViewModel : ViewModel() {
-    // Lista svih vježbi unesenih kroz formu
-    var listaVjezbi = mutableStateListOf<Vjezba>()
-        private set
+    val sveVjezbe: StateFlow<List<VjezbaEntity>> = repository.sveVjezbe
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun dodajVjezbu(vjezba: Vjezba) {
-        listaVjezbi.add(vjezba)
-    }
-
-    fun obrisiVjezbu(index: Int) {
-        if (index >= 0 && index < listaVjezbi.size) {
-            listaVjezbi.removeAt(index)
+    fun dodajVjezbu(vjezba: VjezbaEntity) {
+        viewModelScope.launch {
+            repository.dodajVjezbu(vjezba)
         }
     }
 
+    fun obrisiVjezbu(vjezba: VjezbaEntity) {
+        viewModelScope.launch {
+            repository.obrisiVjezbu(vjezba)
+        }
+    }
 }
