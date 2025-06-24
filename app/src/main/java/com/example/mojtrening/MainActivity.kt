@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.mojtrening.data.AppDatabase
 import com.example.mojtrening.data.VjezbaRepository
+import com.example.mojtrening.data.TreningRepository
 import com.example.mojtrening.viewmodel.TreningViewModel
 import com.example.mojtrening.viewmodel.TreningViewModelFactory
 import com.example.mojtrening.ui.theme.theme.MojTreningTheme
@@ -31,25 +32,27 @@ class MainActivity : ComponentActivity() {
             AppDatabase::class.java,
             "trening_baza"
         )
-            .fallbackToDestructiveMigration() // koristi se ako promijeniš strukturu entiteta
+            .fallbackToDestructiveMigration(true) // koristi se ako promijeniš strukturu entiteta
             .allowMainThreadQueries() //  koristi se samo za testiranje, ne u produkciji
             .build()
 
-        // Inicijalizacija Repository-ja i ViewModel-a
-        val repository = VjezbaRepository(db.vjezbaDao())
-        val viewModelFactory = TreningViewModelFactory(repository)
+        // Inicijalizacija Repository-ja
+        val vjezbaRepository = VjezbaRepository(db.vjezbaDao())
+        val treningRepository = TreningRepository(db.treningDao())
 
         // UI prikaz
         setContent {
             // ViewModel mora biti kreiran unutar @Composable konteksta
-            val factory = TreningViewModelFactory(repository)
+            val factory = TreningViewModelFactory(vjezbaRepository, treningRepository)
             val treningViewModel: TreningViewModel = viewModel(factory = factory)
             val navController = rememberNavController()
 
+            // Primjenjuje se tema i omogućuje pristup ViewModelu unutar cijelog sučelja
             MojTreningTheme {
                 CompositionLocalProvider(LocalTreningViewModel provides treningViewModel) {
                     NavigationGraph(navController = navController)
                 }
+
             }
         }
     }

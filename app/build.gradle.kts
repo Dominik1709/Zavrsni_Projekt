@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
+    id("com.google.devtools.ksp") version "2.1.21-2.0.1"
 
 }
 
@@ -64,6 +64,14 @@ dependencies {
     implementation (libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp (libs.androidx.room.compiler)
+
+    //test
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
+
+
 
 
 
